@@ -161,6 +161,24 @@ footer{
     cursor:pointer;
 }
 
+.bg-love{
+    position:fixed;
+    top:-20px;
+    font-size:30px;
+    color:#ff4d8d;
+    opacity:0.2; /* bikin transparan */
+    pointer-events:none;
+    animation:fall linear forwards;
+    z-index:0;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(110vh);
+        opacity:0;
+    }
+}
+
 </style> 
 </head>
 <body>
@@ -337,6 +355,22 @@ function showImage(){
 function closeImage(){
     document.getElementById("imageModal").style.display = "none";
 }
+
+setInterval(() => {
+    const love = document.createElement("div");
+    love.classList.add("bg-love");
+    love.innerHTML = "💗"; // bisa ❤️ juga
+
+    love.style.left = Math.random() * 100 + "vw";
+    love.style.fontSize = (20 + Math.random() * 20) + "px"; // ukuran beda-beda
+    love.style.animationDuration = (5 + Math.random() * 4) + "s"; // kecepatan beda-beda
+
+    document.body.appendChild(love);
+
+    setTimeout(() => {
+        love.remove();
+    }, 9000);
+}, 400);
 
 </script>
 </body>
