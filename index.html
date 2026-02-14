@@ -21,15 +21,23 @@
 }
 
 .foto{
-    width:100%;
-    height:250px;
-    object-fit:cover;
-    border-radius:20px;
-    transition:0.5s;
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 25px;
+    padding: 6px;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fad0c4);
+    box-shadow: 
+        0 15px 35px rgba(255, 105, 135, 0.3),
+        0 5px 15px rgba(0,0,0,0.15);
+    transition: 0.4s ease;
 }
 
 .foto:hover{
-    transform:scale(1.05);
+    transform: scale(1.05) rotate(-1deg);
+    box-shadow: 
+        0 20px 45px rgba(255, 105, 135, 0.5),
+        0 10px 25px rgba(0,0,0,0.2);
 }
 }
 
@@ -115,6 +123,44 @@ footer{
     color:#6e3b3b;
     opacity:0.7;
 }
+.modal{
+    display:none;
+    position:fixed;
+    z-index:999;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.8);
+    backdrop-filter:blur(8px);
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-content{
+    width: 90%;
+    max-width: 350px; /* samain vibe sama foto grid */
+    height: 250px;    /* sama kayak foto kenangan */
+    object-fit: cover;
+    border-radius: 25px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    animation: zoomIn 0.4s ease;
+}
+
+@keyframes zoomIn{
+    from{transform:scale(0.7); opacity:0;}
+    to{transform:scale(1); opacity:1;}
+}
+
+.close{
+    position:absolute;
+    top:25px;
+    right:35px;
+    font-size:40px;
+    color:white;
+    cursor:pointer;
+}
+
 </style> 
 </head>
 <body>
@@ -197,37 +243,17 @@ footer{
     <button onclick="unlock()">Buka Rahasia 💌</button>
 
     <div id="secret" class="hidden">
-    <h1>Untuk Devana</h1>
+<h1>Untuk Devana 🤍</h1>
 
-    <p>
-    Makasih ya, Sayangg…  
-    udah hadir di hidup aku.  
-    Makasih udah sabar, bahkan di saat aku kadang nggak gampang buat dimengerti.
-    </p>
+<p id="secretText"></p>
+<button id="extraBtn" style="display:none;" onclick="showImage()">
+    Eh ketinggalan 👀
+</button>
 
-    <p>
-    Aku juga mau minta maaf.  
-    Kalau selama ini aku sering salah.  
-    Sering overthinking.  
-    Sering mempermasalahkan hal-hal kecil yang sebenernya nggak perlu dibesar-besarin.
-    </p>
-
-    <p>
-    Aku sadar aku belum selalu jadi yang terbaik buat kamu.  
-    Tapi satu hal yang nggak pernah berubah —  
-    perasaan aku ke kamu tetap sama.
-    </p>
-
-    <p>
-    Aku cuma pengen kita sama-sama belajar,  
-    sama-sama dewasa,  
-    dan tetap milih satu sama lain setiap hari.
-    </p>
-
-    <p>
-    Selamat Hari Valentine, Devana 🤍  
-    Dari Rey, yang masih dan tetap sayang.
-    </p>
+<<div id="imageModal" class="modal">
+    <span class="close" onclick="closeImage()">&times;</span>
+    <img class="modal-content" id="popupImg" src="foto7.jpg">
+</div>
 </div>
 </section>
 
@@ -268,6 +294,50 @@ setInterval(()=>{
     setTimeout(()=>{ heart.remove(); },6000);
 },900);
 </script>
+<script>
+function unlock() {
+    document.getElementById("secret").style.display = "block";
+    typeWriter();
+}
 
+const text = `Makasih ya sayang...
+udah hadir di hidup aku.
+
+Aku juga mau minta maaf.
+Kalau selama ini aku sering salah.
+Sering overthinking.
+Sering mempermasalahkan hal-hal kecil.
+
+Aku sadar aku belum selalu jadi yang terbaik.
+Tapi satu hal yang nggak pernah berubah —
+perasaan aku ke kamu tetap sama 
+
+Maaf yaa aku belum bisa kasih apa apa buat kamu di hari valentine inii.
+
+SELAMAT HARI VALENTINE, SAYANGG 🤍
+ Dari Rey, yang masih dan tetap sayang.`;
+
+let i = 0;
+
+function typeWriter() {
+    if (i < text.length) {
+        document.getElementById("secretText").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 40);
+    } else {
+        // Setelah selesai ngetik
+        document.getElementById("extraBtn").style.display = "inline-block";
+    }
+}
+
+function showImage(){
+    document.getElementById("imageModal").style.display = "flex";
+}
+
+function closeImage(){
+    document.getElementById("imageModal").style.display = "none";
+}
+
+</script>
 </body>
 </html>
